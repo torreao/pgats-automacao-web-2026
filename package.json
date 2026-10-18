@@ -1,0 +1,23 @@
+{
+  "name": "pgats-automacao-web-2026",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/torreao/pgats-automacao-web-2026.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/torreao/pgats-automacao-web-2026/issues"
+  },
+  "homepage": "https://github.com/torreao/pgats-automacao-web-2026#readme",
+  "devDependencies": {
+    "cypress": "^13.7.3",
+    "cypress-xpath": "^2.0.1"
+  }
+}
