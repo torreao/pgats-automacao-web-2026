@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   cypress-run:
@@ -12,6 +13,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
@@ -27,4 +34,6 @@ jobs:
           path: |
             cypress/reports
             cypress/screenshots
-          retention-days: 90
+          if-no-files-found: ignore
+          retention-days: 30
+
