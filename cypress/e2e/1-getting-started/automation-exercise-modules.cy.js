@@ -8,7 +8,7 @@ const carrinho = require("../../modules/carrinho/index")
 const checkout = require("../../modules/checkout/index")
 const massa = require("../../fixtures/usuario.json")
 
-describe("Automation Exercise - Testes Modularizados e Boas Práticas", () => {
+describe("Cenários de Testes do site Automation Exercise", () => {
 
   it("CT01: Cadastrar um novo usuário com sucesso", () => {
     cy.visit("/")
