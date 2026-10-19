@@ -1,0 +1,12 @@
+{
+  "nome": "PGATS Aut",
+  "senha": "12345",
+  "senhaIncorreta": "54321",
+  "cartao": {
+    "numero": "4111111111111111",
+    "cvc": "123",
+    "mes": "12",
+    "ano": "2030"
+  },
+  "comentario": "Realizando pedido via automacao web"
+}
