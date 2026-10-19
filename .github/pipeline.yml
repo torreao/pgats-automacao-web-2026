@@ -1,0 +1,30 @@
+name: Execução Testes Automatizados Web
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          spec: cypress/e2e/1-getting-started/automation-exercise-modules.cy.js
+
+      - name: Salvar Relatório Mochawesome
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mochawesome-report
+          path: |
+            cypress/reports
+            cypress/screenshots
+          retention-days: 90

@@ -30,7 +30,7 @@ function preencherCadastro() {
     cy.get('[data-qa="city"]').type(faker.location.city())
     cy.get('[data-qa="zipcode"]').type(faker.location.zipCode('#####'))
 
-    cy.get('[data-qa="mobile_number"]').type(faker.phone.number('9########'))
+    cy.get('[data-qa="mobile_number"]').type(faker.string.numeric(9))
 
     cy.get('[data-qa="create-account"]').click()
 }

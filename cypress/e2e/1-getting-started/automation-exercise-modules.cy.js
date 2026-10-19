@@ -15,7 +15,7 @@ describe("Automation Exercise - Testes Modularizados e Boas Práticas", () => {
     cy.get("a[href*=login]").click()
 
     cadastro.iniciarCadastro(
-      massa.nome || "PGATS Aut",
+      massa.nome,
       `pgats-aut-test-${Date.now()}@mail.com`
     )
     cadastro.preencherCadastro()
@@ -26,18 +26,18 @@ describe("Automation Exercise - Testes Modularizados e Boas Práticas", () => {
     cy.visit("/login")
 
     login.preencherLogin(
-      Cypress.env("usuario_existente") || "pgats-aut-test-1792360981088@mail.com",
-      "12345"
+      Cypress.env("usuario_existente"),
+      massa.senha
     )
     login.verificarSeLoginFoiEfetuadoComSucesso()
   })
 
-  it("CT03: Efetuar Login de Usuário email e senha INCORRECTOS", () => {
+  it("CT03: Efetuar Login de Usuário email e senha INCORRETOS", () => {
     cy.visit("/login")
 
     login.preencherLogin(
-      Cypress.env("usuario_existente") || "pgats-aut-test-1792360981088@mail.com",
-      "54321"
+      Cypress.env("usuario_existente"),
+      massa.senhaIncorreta
     )
     login.verificarSeMensagemDeErroFoiExibidaNoLogin()
   })
@@ -46,8 +46,8 @@ describe("Automation Exercise - Testes Modularizados e Boas Práticas", () => {
     cy.visit("/login")
 
     login.preencherLogin(
-      Cypress.env("usuario_existente") || "pgats-aut-test-1792360981088@mail.com",
-      "12345"
+      Cypress.env("usuario_existente"),
+      massa.senha
     )
     login.efetuarLogout()
     login.verificarSeOUsuarioFoiDeslogado()
@@ -58,8 +58,8 @@ describe("Automation Exercise - Testes Modularizados e Boas Práticas", () => {
     cy.get("a[href*=login]").click()
 
     cadastro.iniciarCadastro(
-      massa.nome || "PGATS Aut",
-      Cypress.env("usuario_existente") || "pgats-aut-test-1792360981088@mail.com"
+      massa.nome,
+      Cypress.env("usuario_existente")
     )
     cadastro.verificarSeMensagemDeCadastroExistenteFoiExibida()
   })
@@ -90,32 +90,31 @@ describe("Automation Exercise - Testes Modularizados e Boas Práticas", () => {
 
   it("CT15: Fazer pedido: Registre-se antes de finalizar a compra", () => {
     const emailDinamico = `pgats-test-${Date.now()}@mail.com`
-    const nomeUsuario = massa.nome || "PGATS Aut"
 
     cy.visit("/")
 
     cy.get('a[href="/"] img').should("be.visible")
 
     cy.get("a[href*=login]").click()
-    cadastro.iniciarCadastro(nomeUsuario, emailDinamico)
+    cadastro.iniciarCadastro(massa.nome, emailDinamico)
     cadastro.preencherCadastro()
     cadastro.verificarSeCadastroFoiEfetuadoComSucesso()
 
     cy.get('[data-qa="continue-button"]').click()
-    cy.contains(`Logged in as ${nomeUsuario}`).should("be.visible")
+    cy.contains(`Logged in as ${massa.nome}`).should("be.visible")
 
     carrinho.adicionarProdutoAoCarrinho()
     carrinho.irParaCarrinhoEVerificar()
     carrinho.clicarFinalizarCompra()
 
     checkout.verificarEnderecoERevisarPedido()
-    checkout.preencherComentarioEFazerPedido("Pedido automatizado de teste CT15")
+    checkout.preencherComentarioEFazerPedido(massa.comentario)
     checkout.preencherPagamentoEConfirmar(
-      nomeUsuario,
-      "4111111111111111",
-      "123",
-      "12",
-      "2030"
+      massa.nome,
+      massa.cartao.numero,
+      massa.cartao.cvc,
+      massa.cartao.mes,
+      massa.cartao.ano
     )
     checkout.verificarMensagemDeSucesso()
 
@@ -124,33 +123,31 @@ describe("Automation Exercise - Testes Modularizados e Boas Práticas", () => {
 
   it("CT16: Fazer pedido: Faça login antes de finalizar a compra", () => {
     const emailDinamico = `pgats-login-${Date.now()}@mail.com`
-    const senhaDinamica = "12345"
-    const nomeUsuario = massa.nome || "PGATS Aut"
 
     cy.visit("/")
     cy.get('a[href="/"] img').should("be.visible")
     cy.get("a[href*=login]").click()
-    cadastro.iniciarCadastro(nomeUsuario, emailDinamico)
+    cadastro.iniciarCadastro(massa.nome, emailDinamico)
     cadastro.preencherCadastro()
     cadastro.verificarSeCadastroFoiEfetuadoComSucesso()
     cy.get('[data-qa="continue-button"]').click()
     login.efetuarLogout()
     login.verificarSeOUsuarioFoiDeslogado()
-    login.preencherLogin(emailDinamico, senhaDinamica)
-    cy.contains(`Logged in as ${nomeUsuario}`).should("be.visible")
+    login.preencherLogin(emailDinamico, massa.senha)
+    cy.contains(`Logged in as ${massa.nome}`).should("be.visible")
 
     carrinho.adicionarProdutoAoCarrinho()
     carrinho.irParaCarrinhoEVerificar()
     carrinho.clicarFinalizarCompra()
 
     checkout.verificarEnderecoERevisarPedido()
-    checkout.preencherComentarioEFazerPedido("Pedido automatizado de teste CT16")
+    checkout.preencherComentarioEFazerPedido(massa.comentario)
     checkout.preencherPagamentoEConfirmar(
-      nomeUsuario,
-      "4111111111111111",
-      "123",
-      "12",
-      "2030"
+      massa.nome,
+      massa.cartao.numero,
+      massa.cartao.cvc,
+      massa.cartao.mes,
+      massa.cartao.ano
     )
     checkout.verificarMensagemDeSucesso()
 
